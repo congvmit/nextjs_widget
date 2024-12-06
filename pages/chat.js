@@ -1,6 +1,28 @@
+'use client'
+
 import { useRef, useState } from "react";
 
 export default function ChatWidget() {
+  // Function to set a cookie
+  const setCookieFunction = (name, value, days) => {
+    let expires = "";
+    if (days) {
+      const date = new Date();
+      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + value + expires + "; path=/;SameSite=None; Secure";
+    // setMessage(`Cookie set: ${name} = ${value}`);
+  };
+
+  // Function to get a cookie by name
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+    return null;
+  };
+
   const scrollTargetRef = useRef(null);
   const intialMesages = [
     {
@@ -22,6 +44,8 @@ export default function ChatWidget() {
       return;
     }
 
+    setCookieFunction("message", message, 7); // Set cookie for 7 days
+
     setMessages([...messages, { role: "user", content: message }]);
     e.target.message.value = "";
     setTimeout(() => {
@@ -38,9 +62,8 @@ export default function ChatWidget() {
             {messages.map((item, idx) => (
               <li
                 key={idx}
-                className={`flex items-center ${
-                  item.role === "user" ? "ml-10 justify-end" : "mr-10"
-                }`}
+                className={`flex items-center ${item.role === "user" ? "ml-10 justify-end" : "mr-10"
+                  }`}
               >
                 <p className="bg-gray-100 p-4 rounded-md">{item.content}</p>
               </li>

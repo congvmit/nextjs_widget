@@ -76,7 +76,7 @@
     const chatWidget = document.createElement("div");
     chatWidget.id = "chat-widget";
     chatWidget.innerHTML = `
-              <iframe id="chat-frame-widget" src="http://localhost:3001/chat" class="shadow-xl ring-1 rounded-lg" style="display: none; border: none; position: fixed; inset: auto 15px 75px auto; width: 400px; height: 540px; opacity: 1; color-scheme: none; background: white !important; margin: 0px; max-height: 100vh; max-width: 100vw; transform: translateY(0px); transition: none 0s ease 0s !important; visibility: visible; z-index: 999999999 !important;"></iframe>
+              <iframe id="chat-frame-widget" src="http://localhost:3000/chat" class="shadow-xl ring-1 rounded-lg" style="display: none; border: none; position: fixed; inset: auto 15px 75px auto; width: 400px; height: 540px; opacity: 1; color-scheme: none; background: white !important; margin: 0px; max-height: 100vh; max-width: 100vw; transform: translateY(0px); transition: none 0s ease 0s !important; visibility: visible; z-index: 999999999 !important;"></iframe>
               <button id="btn-trigger-chat" class="shadow-xl ring-1">${components.icon_message}</button>
               `;
     document.head.insertAdjacentHTML("beforeend", styleTag);
@@ -108,6 +108,7 @@
     console.log(">>>>> Document is not loaded yet");
     document.addEventListener("readystatechange", () => {
       if (document.readyState === "complete") {
+        console.log(">>>>> Document is now loaded");
         initializeChatInterface((chatKey = chatKey));
       }
     });
